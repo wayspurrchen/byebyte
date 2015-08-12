@@ -11,11 +11,11 @@ function getRandomInt(min, max) {
 var continuous = argv.c || argv.continuous;
 if ( continuous === 'false' ) continuous = false;
 if ( continuous === undefined ) continuous = true;
-var continuousChance = argv.r || argv.continuousChance || 0.6;
+var continuousChance = argv.C || argv.continuousChance || 0.6;
 console.log( 'Continuous mode:', continuous );
 console.log( 'Continuous chance:', continuousChance );
 
-var replaces = argv.t || argv.times || 50;
+var times = argv.t || argv.times || 50;
 var out = argv.o || argv.out;
 var file = argv.f || argv.file;
 var buf = fs.readFileSync( path.resolve( process.cwd(), file ) );
@@ -26,7 +26,7 @@ console.log( "File length: " + len );
 console.log( "Randomly assigning hex values within bytes " + min + " and " + max );
 
 var offset = getRandomInt( min, max );
-for ( var i = 0; i < replaces; i++ ) {
+for ( var i = 0; i < times; i++ ) {
 	var val = getRandomInt( 0, 255 );
 	buf[ offset ] = getRandomInt( 0, 511 );
 	// console.log( offset, val );
@@ -47,4 +47,4 @@ for ( var i = 0; i < replaces; i++ ) {
 	}
 }
 fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
-console.log( 'Replaced ' + replaces + ' byte(s) with trash and exported to ' + out + '.' );
+console.log( 'Replaced ' + times + ' byte(s) with trash and exported to ' + out + '.' );
