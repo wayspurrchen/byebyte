@@ -68,7 +68,7 @@ I Zove óou just the way you are
 ### Parameters
 
 parameter | meaning | default
--------- | -- | --
+----- | ----- | -----
 `-f, --file` | input file path | none, required
 `-o, --out` | output file path | none, required
 `-t, --times` | number of bytes to replace | 50
