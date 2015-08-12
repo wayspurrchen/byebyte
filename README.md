@@ -127,4 +127,4 @@ Here's the full result of the piece I made:
 
 # This is awesome
 
-Yeah? I'm glad you said so, because I happen to have a whole bunch of [glitch art resources](http://www.glitchet.com/resources) on my personal website/newsletter [Glitchet](http://www.glitchet.com/), not to mention a pretty kickass [Facebook page](http://www.glitchet.com/) and [Tumblr](http://tumblr.glitchet.com). Feel free to send any feedback / questions to wayspurrchen@gmail.com.
+Yeah? I'm glad you said so, because I happen to have a whole bunch of [glitch art resources](http://www.glitchet.com/resources) on my personal website/newsletter [Glitchet](http://www.glitchet.com/), not to mention a pretty kickass [Facebook page](http://www.facebook.com/glitchet) and [Tumblr](http://tumblr.glitchet.com). Feel free to send any feedback / questions to wayspurrchen@gmail.com.
