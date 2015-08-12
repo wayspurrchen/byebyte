@@ -67,15 +67,15 @@ I Zove óou just the way you are
 
 ### Parameters
 
-| parameter | meaning | default |
-| -- | -- | -- |
-|`-f, --file`|input file path|none, required|
-|`-o, --out`|output file path|none, required|
-|`-t, --times`|number of bytes to replace|50|
-|`--min`|(real number, 0.0 - 1.0) - the lower bound of the file to replace bytes in. you might use this to avoid corrupting the header of a file, rendering it unopenable|0.1|
-|`--max`|(real number, 0.0 - 1.0) - the upper bound of the file to replace bytes in. you might use this to avoid corrupting the footer of a file, rendering it unopenable|0.9|
-|`-c, --continuous`|if set to true, this will randomly decide to replace the next byte after the last one was replaced. you might do this to get "runs" of replaced bytes in a row instead of just scattered, randomly replaced pixels|true|
-|`-C, --continuousChance`|(real number, 0.0 - 1.0) the chance, in decimal format, of the next byte being continuous. 0.6 = 60%, 0.2 = 20%, etc.|0.6|
+parameter | meaning | default
+-------- | -- | --
+`-f, --file` | input file path | none, required
+`-o, --out` | output file path | none, required
+`-t, --times` | number of bytes to replace | 50
+`--min` | (real number, 0.0 - 1.0) - the lower bound of the file to replace bytes in. you might use this to avoid corrupting the header of a file, rendering it unopenable | 0.1
+`--max` | (real number, 0.0 - 1.0) - the upper bound of the file to replace bytes in. you might use this to avoid corrupting the footer of a file, rendering it unopenable | 0.9
+`-c, --continuous` | if set to true, this will randomly decide to replace the next byte after the last one was replaced. you might do this to get "runs" of replaced bytes in a row instead of just scattered, randomly replaced pixels | true
+`-C, --continuousChance` | (real number, 0.0 - 1.0) the chance, in decimal format, of the next byte being continuous. 0.6 = 60%, 0.2 = 20%, etc. | 0.6
 
 ## Examples?
 
