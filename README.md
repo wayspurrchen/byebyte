@@ -17,27 +17,19 @@ Because you like [glitch art](http://www.reddit.com/r/glitch_art) or you just ne
 
 ## How?
 
-You'll need [Node.js](https://nodejs.org/) to run this file, so you need that installed first. You'll also need to learn [how to use a command line](http://lifehacker.com/5633909/who-needs-a-mouse-learn-to-use-the-command-line-for-almost-anything) if you don't know already, and you will need [Git](https://git-scm.com/downloads). Next, you can clone the repository:
+You'll need [Node.js](https://nodejs.org/) to run this file, so you need that installed first. You'll also need to learn [how to use a command line](http://lifehacker.com/5633909/who-needs-a-mouse-learn-to-use-the-command-line-for-almost-anything). Once you have Node, you can install byebyte pretty easily:
 
 ```
-git clone https://github.com/wayspurrchen/byebyte.git
-cd byebyte
-npm install
+npm install -g byebyte
 ```
-
-This does these things:
-
-1) clone this repository into the `byebyte` folder from wherever you ran the command.
-2) navigate into the `byebyte` folder
-3) install the dependencies `byebyte` needs to operate
 
 You're set up! Now you can run byebyte like this:
 
-`node index.js -f <inputfile> -o <outputfile> [more options]`
+`byebyte -f <inputfile> -o <outputfile> [more options]`
 
 For example, if you wanted to destroy a text file, you would run:
 
-`node index.js -f poem.txt -o newpoem.txt`
+`byebyte -f poem.txt -o newpoem.txt`
 
 This short little poem:
 
