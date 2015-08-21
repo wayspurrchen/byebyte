@@ -1,6 +1,6 @@
 {
   "name": "byebyte",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Randomly replace bytes in your files for the sake of art",
   "main": "index.js",
   "scripts": {
