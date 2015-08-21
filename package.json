@@ -1,5 +1,5 @@
 {
-  "name": "filedestroyer",
+  "name": "byebyte",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "filedestroyer": "index.js"
+    "byebyte": "index.js"
   },
   "author": "",
   "license": "ISC",
