@@ -1,5 +1,4 @@
-#! /usr/bin/env node
-
+#!/usr/bin/env node
 var path = require( 'path' );
 var log = require( 'npmlog' );
 var yargs = require('yargs');
