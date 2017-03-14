@@ -1,6 +1,6 @@
 {
   "name": "byebyte",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Randomly replace bytes in your files for the sake of art",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,13 @@
   },
   "author": "Way Spurr-Chen",
   "license": "ISC",
+  "engine": {
+    "node": "^6"
+  },
   "dependencies": {
     "minimist": "^1.1.1",
-    "npmlog": "^1.2.1"
+    "npmlog": "^1.2.1",
+    "shuffle-array": "^1.0.1",
+    "yargs": "^7.0.2"
   }
 }
