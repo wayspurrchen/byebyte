@@ -257,7 +257,7 @@ Shuffling also has some interesting effects on images, particularly rawer format
 
 ![](http://i.imgur.com/tUaivU0.jpg)
 
-Video files tend to get thoroughly destroyed, but with some potentially interesting effects, and audio files also get destroyed in weird ways.
+Video files tend to get thoroughly destroyed, but with some potentially interesting effects, and audio files also get destroyed in weird ways. [Here's a link to a video example](http://i.imgur.com/S8zL4FG.gifv).
 
 # This is awesome
 
