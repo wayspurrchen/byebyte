@@ -75,7 +75,6 @@ module.exports = {
             chunk.copy(buf, bufIndex, 0, chunk.length);
             bufIndex += chunk.length;
             var doneTime = Date.now();
-            console.log('chunk copy took ' + (doneTime - time) + 'ms');
         });
 
         if (stop < len) {
