@@ -61,19 +61,25 @@ module.exports = {
             index += chunkSize;
         }
 
-        var buf = Buffer.alloc(0);
+        var buf = Buffer.alloc(len);
+        var bufIndex = 0;
         if (start > 0) {
-            buf = Buffer.concat([buf, fileBuffer.slice(0, start)]);
+            fileBuffer.copy(buf, bufIndex, 0, start);
+            bufIndex = start;
         }
 
         shuffle(chunks);
 
         chunks.forEach(function (chunk) {
-            buf = Buffer.concat([buf, chunk]);
+            var time = Date.now();
+            chunk.copy(buf, bufIndex, 0, chunk.length);
+            bufIndex += chunk.length;
+            var doneTime = Date.now();
+            console.log('chunk copy took ' + (doneTime - time) + 'ms');
         });
 
         if (stop < len) {
-            buf = Buffer.concat([buf, fileBuffer.slice(stop, len)]);
+            fileBuffer.copy(buf, bufIndex, stop, len);
         }
 
         fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
