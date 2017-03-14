@@ -82,6 +82,6 @@ module.exports = {
         }
 
         fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
-        console.log('Replaced byte(s) with trash and exported to ' + out + '.');
+        console.log('Reshuffled bytes and wrote to ' + out + '.');
     }
 };
