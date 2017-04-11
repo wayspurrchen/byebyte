@@ -10,7 +10,7 @@ var shuffle = require('shuffle-array')
  * The chunks are then sorted according to 
  */
 
-module.exports = {
+var api = module.exports = {
     command: 'shuffle',
     desc: 'reorder the data in the file',
     builder: function (yargs) {
@@ -43,6 +43,23 @@ module.exports = {
         console.log( "File length: " + len );
         console.log( "Randomly shuffling chunks between " + start + " and " + stop);
 
+        var buf = api.fn(fileBuffer, {
+          start: start,
+          stop: stop,
+          chunkMin: argv['chunk-min'],
+          chunkMax: argv['chunk-max'],
+        });
+
+        fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
+        console.log('Reshuffled bytes and wrote to ' + out + '.');
+    },
+    fn: function(fileBuffer, opts) {
+        var len = fileBuffer.length;
+
+        var startStop = util.determineModificationRange(opts, len);
+        var start = startStop.start;
+        var stop = startStop.stop;
+      
         var chunkBuf = fileBuffer.slice(start, stop);
         var chunkBufLen = chunkBuf.length;
         var chunks = [];
@@ -50,7 +67,7 @@ module.exports = {
         var index = 0;
         while (index < chunkBufLen) {
             var bufLeft = chunkBufLen - index;
-            var chunkSize = util.getRandomInt(argv['chunk-min'], argv['chunk-max']);
+            var chunkSize = util.getRandomInt(opts.chunkMin, opts.chunkMax);
             if (chunkSize > bufLeft) {
                 chunkSize = bufLeft;
             }
@@ -81,7 +98,6 @@ module.exports = {
             fileBuffer.copy(buf, bufIndex, stop, len);
         }
 
-        fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
-        console.log('Reshuffled bytes and wrote to ' + out + '.');
+        return buf;
     }
 };
