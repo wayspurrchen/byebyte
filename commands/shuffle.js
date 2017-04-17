@@ -17,11 +17,13 @@ var api = module.exports = {
         var options = {
             'chunk-min': {
                 describe: 'the minimum size a shuffled chunk may be',
-                type: 'number'
+                type: 'number',
+                demand: true
             },
             'chunk-max': {
                 describe: 'the maximum size a shuffled chunk may be',
-                type: 'number'
+                type: 'number',
+                demand: true
             }
         };
 

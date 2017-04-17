@@ -21,7 +21,6 @@
     "yargs": "^7.0.2"
   },
   "devDependencies": {
-    "pixelmatch": "^4.0.2",
     "tape": "^4.6.3"
   }
 }
