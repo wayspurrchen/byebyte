@@ -65,7 +65,50 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function checkGeneralLength(opts, len) {
+    var hasMinMax = opts.min !== undefined || opts.max !== undefined;
+    var hasStartStop = opts.start !== undefined || opts.stop !== undefined;
+
+    if (hasMinMax && hasStartStop) {
+      throw new Error('min/max and start/stop cannot be used together');  
+    }
+
+    if (hasStartStop && opts.stop === undefined) {
+      throw new Error('stop must be provided');
+    }
+
+    if (hasStartStop && opts.start === undefined) {
+      throw new Error('start must be provided');
+    }
+
+    if (hasMinMax && opts.max === undefined) {
+      throw new Error('max must be provided');
+    }
+
+    if (hasMinMax && opts.min === undefined) {
+      throw new Error('min must be provided');
+    }
+
+    if ((opts.min || 0) < 0) {
+      throw new Error('min must be >= 0');
+    }
+
+    if ((opts.max || 0) > 1) {
+      throw new Error('max must be <= 1');
+    }
+
+    if ((opts.start || 0) < 0) {
+      throw new Error('start must be >= 0');
+    }
+
+    if ((opts.stop || 0) > len) {
+      throw new Error('stop must be <= the length of the file buffer');
+    }
+  
+}
+
 module.exports = {
-	getRandomInt: getRandomInt,
-	determineModificationRange: determineModificationRange
+   checkGeneralLength: checkGeneralLength,
+	  getRandomInt: getRandomInt,
+	  determineModificationRange: determineModificationRange
 };

@@ -59,13 +59,19 @@ var api = module.exports = {
         var getRandomInt = opts.getRandomInt || util.getRandomInt;
         var continuous = opts.continuous || false;
         var continuousChance = opts.continuousChance || 0.6;
-
-        var len = fileBuffer.length;
         var times = opts.times || 50;
 
+        var len = fileBuffer.length;
+
+        util.checkGeneralLength(opts, len);
+
+        var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
         var startStop = util.determineModificationRange(opts, len);
         var start = startStop.start;
         var stop = startStop.stop;
+        if (start > stop) {
+          throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+        }
 
         var offset = getRandomInt(start, stop);
         for (var i = 0; i < times; i++) {
