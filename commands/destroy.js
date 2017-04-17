@@ -56,6 +56,7 @@ var api = module.exports = {
         console.log( 'Replaced ' + times + ' byte(s) with trash and exported to ' + out + '.' );
     },
     fn: function(fileBuffer, opts) {
+        var getRandomInt = opts.getRandomInt || util.getRandomInt;
         var continuous = opts.continuous || false;
         var continuousChance = opts.continuousChance || 0.6;
 
@@ -66,9 +67,9 @@ var api = module.exports = {
         var start = startStop.start;
         var stop = startStop.stop;
 
-        var offset = util.getRandomInt(start, stop);
+        var offset = getRandomInt(start, stop);
         for (var i = 0; i < times; i++) {
-            fileBuffer[ offset ] = util.getRandomInt(1, 255);
+            fileBuffer[ offset ] = getRandomInt(1, 255);
 
             // If we have continuous set to true, and trying to continue would
             // not run off the range of the buffer, we continue on to the next
@@ -78,10 +79,10 @@ var api = module.exports = {
                 if ((continuousChance > Math.random()) && (offset + 1 <= stop)) {
                     offset++;
                 } else {
-                    offset = util.getRandomInt(start, stop);
+                    offset = getRandomInt(start, stop);
                 }
             } else {
-                offset = util.getRandomInt(start, stop);
+                offset = getRandomInt(start, stop);
             }
         }
 

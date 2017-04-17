@@ -37,7 +37,7 @@ var api = module.exports = {
         var out = argv.o || argv.output;
         var fileBuffer = fs.readFileSync( path.resolve( process.cwd(), filepath ) );
         var len = fileBuffer.length;
-        var startStop = util.determineModificationRange(argv, len);
+       var startStop = util.determineModificationRange(argv, len);
         var start = startStop.start;
         var stop = startStop.stop;
         console.log( "File length: " + len );
@@ -54,12 +54,13 @@ var api = module.exports = {
         console.log('Reshuffled bytes and wrote to ' + out + '.');
     },
     fn: function(fileBuffer, opts) {
+        var getRandomInt = opts.getRandomInt || util.getRandomInt;
         var len = fileBuffer.length;
 
         var startStop = util.determineModificationRange(opts, len);
         var start = startStop.start;
         var stop = startStop.stop;
-      
+
         var chunkBuf = fileBuffer.slice(start, stop);
         var chunkBufLen = chunkBuf.length;
         var chunks = [];
@@ -67,7 +68,7 @@ var api = module.exports = {
         var index = 0;
         while (index < chunkBufLen) {
             var bufLeft = chunkBufLen - index;
-            var chunkSize = util.getRandomInt(opts.chunkMin, opts.chunkMax);
+            var chunkSize = getRandomInt(opts.chunkMin, opts.chunkMax);
             if (chunkSize > bufLeft) {
                 chunkSize = bufLeft;
             }

@@ -1,16 +1,7 @@
 var util = require('../util');
 var realRandom = util.getRandomInt;
-var api = module.exports = {};
 
-api.hijack = function() {
-  util.getRandomInt = predictible();
-};
-
-api.reset = function() {
-  util.getRandomInt = realRandom;
-};
-
-function predictible() {
+module.exports = function predictible() {
   var base = 100000;
   var div = 11.03;
 
