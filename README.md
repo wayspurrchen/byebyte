@@ -8,6 +8,8 @@
 
 **byebyte** is a command line tool written in Node.js that replaces random bytes in a file with random values.
 
+**byebyte** can also be used as a node module. For info on how to use **byebyte** this way, please see [./node-module.md](./node-module.md).
+
 ## Why would I want to do that?
 
 Because you like [glitch art](http://www.reddit.com/r/glitch_art) or you just need to destroy arbitrary data in a file for some reason while leaving most of it intact. Potential uses:
