@@ -57,11 +57,38 @@ var api = module.exports = {
     },
     fn: function(fileBuffer, opts) {
         var getRandomInt = opts.getRandomInt || util.getRandomInt;
+        var getRandomFloat = function() {
+          var max = 10000000000000;
+          var i = getRandomInt(0, max);
+          return i / max;
+        };
         var len = fileBuffer.length;
 
+        util.checkGeneralLength(opts, len);
+
+        var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
         var startStop = util.determineModificationRange(opts, len);
         var start = startStop.start;
         var stop = startStop.stop;
+        if (start > stop) {
+          throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+        }
+
+        if (opts.chunkMin === undefined) {
+          throw new Error('chunkMin must be provided');
+        }
+
+        if (opts.chunkMin <= 0) {
+          throw new Error('chunkMin must be > 0');
+        }
+
+        if (opts.chunkMax === undefined) {
+          throw new Error('chunkMax must be provided');
+        }
+
+        if (opts.chunkMin > opts.chunkMax) {
+          throw new Error('chunkMin must be <= chunkMax');
+        }
 
         var chunkBuf = fileBuffer.slice(start, stop);
         var chunkBufLen = chunkBuf.length;
@@ -88,7 +115,7 @@ var api = module.exports = {
             bufIndex = start;
         }
 
-        shuffle(chunks);
+        shuffle(chunks, {rng: getRandomFloat});
 
         chunks.forEach(function (chunk) {
             var time = Date.now();
