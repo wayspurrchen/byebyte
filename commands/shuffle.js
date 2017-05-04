@@ -10,18 +10,20 @@ var shuffle = require('shuffle-array')
  * The chunks are then sorted according to 
  */
 
-module.exports = {
+var api = module.exports = {
     command: 'shuffle',
     desc: 'reorder the data in the file',
     builder: function (yargs) {
         var options = {
             'chunk-min': {
                 describe: 'the minimum size a shuffled chunk may be',
-                type: 'number'
+                type: 'number',
+                demand: true
             },
             'chunk-max': {
                 describe: 'the maximum size a shuffled chunk may be',
-                type: 'number'
+                type: 'number',
+                demand: true
             }
         };
 
@@ -37,11 +39,56 @@ module.exports = {
         var out = argv.o || argv.output;
         var fileBuffer = fs.readFileSync( path.resolve( process.cwd(), filepath ) );
         var len = fileBuffer.length;
-        var startStop = util.determineModificationRange(argv, len);
+       var startStop = util.determineModificationRange(argv, len);
         var start = startStop.start;
         var stop = startStop.stop;
         console.log( "File length: " + len );
         console.log( "Randomly shuffling chunks between " + start + " and " + stop);
+
+        var buf = api.fn(fileBuffer, {
+          start: start,
+          stop: stop,
+          chunkMin: argv['chunk-min'],
+          chunkMax: argv['chunk-max'],
+        });
+
+        fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
+        console.log('Reshuffled bytes and wrote to ' + out + '.');
+    },
+    fn: function(fileBuffer, opts) {
+        var getRandomInt = opts.getRandomInt || util.getRandomInt;
+        var getRandomFloat = function() {
+          var max = 10000000000000;
+          var i = getRandomInt(0, max);
+          return i / max;
+        };
+        var len = fileBuffer.length;
+
+        util.checkGeneralLength(opts, len);
+
+        var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
+        var startStop = util.determineModificationRange(opts, len);
+        var start = startStop.start;
+        var stop = startStop.stop;
+        if (start > stop) {
+          throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+        }
+
+        if (opts.chunkMin === undefined) {
+          throw new Error('chunkMin must be provided');
+        }
+
+        if (opts.chunkMin <= 0) {
+          throw new Error('chunkMin must be > 0');
+        }
+
+        if (opts.chunkMax === undefined) {
+          throw new Error('chunkMax must be provided');
+        }
+
+        if (opts.chunkMin > opts.chunkMax) {
+          throw new Error('chunkMin must be <= chunkMax');
+        }
 
         var chunkBuf = fileBuffer.slice(start, stop);
         var chunkBufLen = chunkBuf.length;
@@ -50,7 +97,7 @@ module.exports = {
         var index = 0;
         while (index < chunkBufLen) {
             var bufLeft = chunkBufLen - index;
-            var chunkSize = util.getRandomInt(argv['chunk-min'], argv['chunk-max']);
+            var chunkSize = getRandomInt(opts.chunkMin, opts.chunkMax);
             if (chunkSize > bufLeft) {
                 chunkSize = bufLeft;
             }
@@ -68,7 +115,7 @@ module.exports = {
             bufIndex = start;
         }
 
-        shuffle(chunks);
+        shuffle(chunks, {rng: getRandomFloat});
 
         chunks.forEach(function (chunk) {
             var time = Date.now();
@@ -81,7 +128,6 @@ module.exports = {
             fileBuffer.copy(buf, bufIndex, stop, len);
         }
 
-        fs.writeFileSync( path.resolve( process.cwd(), out ), buf );
-        console.log('Reshuffled bytes and wrote to ' + out + '.');
+        return buf;
     }
 };
