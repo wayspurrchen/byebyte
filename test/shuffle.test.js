@@ -108,17 +108,6 @@ test('[shuffle] min is bigger than max', function(assert) {
     assert.end();
 });
 
-test('[shuffle] stop is greater than the buffer size', function(assert) {
-    var getRandomInt = predictable();
-    var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
-  
-    throwCheck(assert, function() {
-        byebyte.shuffle(fileBuffer, {start:10, stop: fileBuffer.length+10, getRandomInt});
-    }, 'stop must be <= the length of the file buffer', 'throws the right error message');
-
-    assert.end();
-});
-
 test('[shuffle] start is smaller than zero', function(assert) {
     var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));

@@ -64,7 +64,7 @@ var api = module.exports = {
         };
         var len = fileBuffer.length;
 
-        util.checkGeneralLength(opts, len);
+        util.checkArguments(opts, len);
 
         var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
         var startStop = util.determineModificationRange(opts, len);

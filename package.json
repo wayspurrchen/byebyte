@@ -1,6 +1,6 @@
 {
   "name": "byebyte",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Randomly replace bytes in your files for the sake of art",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "node": "^6"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "minimist": "^1.1.1",
     "npmlog": "^1.2.1",
     "shuffle-array": "^1.0.1",
