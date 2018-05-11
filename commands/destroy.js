@@ -2,6 +2,49 @@ var fs = require( 'fs' );
 var path = require('path');
 var util = require('../util');
 
+const bufferMax = 2147483647;
+
+const processBuffer = (filepath, opts) => {
+    var fileBuffer = fs.readFileSync(filepath);
+    var len = fileBuffer.length;
+
+    var getRandomInt = opts.getRandomInt || util.getRandomInt;
+    var continuous = opts.continuous || false;
+    var continuousChance = opts.continuousChance || 0.6;
+    var times = opts.times || 50;
+
+    util.checkGeneralLength(opts, len);
+
+    var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
+    var startStop = util.determineModificationRange(opts, len);
+    var start = startStop.start;
+    var stop = startStop.stop;
+    if (start > stop) {
+        throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+    }
+
+    var offset = getRandomInt(start, stop);
+    for (var i = 0; i < times; i++) {
+        fileBuffer[ offset ] = getRandomInt(1, 255);
+
+        // If we have continuous set to true, and trying to continue would
+        // not run off the range of the buffer, we continue on to the next
+        // pixel slot to override if we beat our continuousChance. If not,
+        // we go to a random place within our range.
+        if (continuous && (offset + 1 <= len)) {
+            if ((continuousChance > Math.random()) && (offset + 1 <= stop)) {
+                offset++;
+            } else {
+                offset = getRandomInt(start, stop);
+            }
+        } else {
+            offset = getRandomInt(start, stop);
+        }
+    }
+
+    return fileBuffer;
+};
+
 var api = module.exports = {
     command: 'destroy',
     desc: 'overwrite file with random data',
@@ -35,64 +78,32 @@ var api = module.exports = {
 
         var times = argv.t || argv.times || 50;
         var filepath = argv.i || argv.input;
-        var out = argv.o || argv.output;
-        var fileBuffer = fs.readFileSync( path.resolve( process.cwd(), filepath ) );
-        var len = fileBuffer.length;
-        var startStop = util.determineModificationRange(argv, len);
-        var start = startStop.start;
-        var stop = startStop.stop;
-        console.log( "File length: " + len );
-        console.log( "Randomly assigning hex values within bytes " + start + " and " + stop);
+        var outpath = argv.o || argv.output;
+        const inputFilePath = path.resolve(process.cwd(), filepath);
+        const stats = fs.statSync(inputFilePath);
 
-        fileBuffer = api.fn(fileBuffer, {
-          times: times,
-          start: start,
-          stop: stop,
-          continuous: continuous,
-          continuousChance: continuousChance
-        });
+        const len = stats['size'];
+        if (len > bufferMax) {
+            console.log('Cannot process files larger than 2 gigabytes.');
+            process.exit(1);
+        } else {
+            var startStop = util.determineModificationRange(argv, len);
+            var start = startStop.start;
+            var stop = startStop.stop;
 
-        fs.writeFileSync( path.resolve( process.cwd(), out ), fileBuffer );
-        console.log( 'Replaced ' + times + ' byte(s) with trash and exported to ' + out + '.' );
-    },
-    fn: function(fileBuffer, opts) {
-        var getRandomInt = opts.getRandomInt || util.getRandomInt;
-        var continuous = opts.continuous || false;
-        var continuousChance = opts.continuousChance || 0.6;
-        var times = opts.times || 50;
+            console.log("File length: " + len);
+            console.log("Randomly assigning hex values within bytes " + start + " and " + stop);
 
-        var len = fileBuffer.length;
+            var output = processBuffer(inputFilePath, {
+                times: times,
+                start: start,
+                stop: stop,
+                continuous: continuous,
+                continuousChance: continuousChance
+            });
 
-        util.checkGeneralLength(opts, len);
-
-        var terms = opts.min !== undefined ? ['min', 'max'] : ['start', 'stop'];
-        var startStop = util.determineModificationRange(opts, len);
-        var start = startStop.start;
-        var stop = startStop.stop;
-        if (start > stop) {
-          throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+            fs.writeFileSync(path.resolve(process.cwd(), outpath), output);
+            console.log('Replaced ' + times + ' byte(s) with trash and exported to ' + outpath + '.');
         }
-
-        var offset = getRandomInt(start, stop);
-        for (var i = 0; i < times; i++) {
-            fileBuffer[ offset ] = getRandomInt(1, 255);
-
-            // If we have continuous set to true, and trying to continue would
-            // not run off the range of the buffer, we continue on to the next
-            // pixel slot to override if we beat our continuousChance. If not,
-            // we go to a random place within our range.
-            if (continuous && (offset + 1 <= len)) {
-                if ((continuousChance > Math.random()) && (offset + 1 <= stop)) {
-                    offset++;
-                } else {
-                    offset = getRandomInt(start, stop);
-                }
-            } else {
-                offset = getRandomInt(start, stop);
-            }
-        }
-
-        return fileBuffer;
-      
     }
 };

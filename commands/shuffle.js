@@ -39,7 +39,7 @@ var api = module.exports = {
         var out = argv.o || argv.output;
         var fileBuffer = fs.readFileSync( path.resolve( process.cwd(), filepath ) );
         var len = fileBuffer.length;
-       var startStop = util.determineModificationRange(argv, len);
+        var startStop = util.determineModificationRange(argv, len);
         var start = startStop.start;
         var stop = startStop.stop;
         console.log( "File length: " + len );
@@ -58,9 +58,9 @@ var api = module.exports = {
     fn: function(fileBuffer, opts) {
         var getRandomInt = opts.getRandomInt || util.getRandomInt;
         var getRandomFloat = function() {
-          var max = 10000000000000;
-          var i = getRandomInt(0, max);
-          return i / max;
+            var max = 10000000000000;
+            var i = getRandomInt(0, max);
+            return i / max;
         };
         var len = fileBuffer.length;
 
@@ -71,23 +71,23 @@ var api = module.exports = {
         var start = startStop.start;
         var stop = startStop.stop;
         if (start > stop) {
-          throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
+            throw new Error(`${terms[0]} must be smaller than ${terms[1]}`);
         }
 
         if (opts.chunkMin === undefined) {
-          throw new Error('chunkMin must be provided');
+            throw new Error('chunkMin must be provided');
         }
 
         if (opts.chunkMin <= 0) {
-          throw new Error('chunkMin must be > 0');
+            throw new Error('chunkMin must be > 0');
         }
 
         if (opts.chunkMax === undefined) {
-          throw new Error('chunkMax must be provided');
+            throw new Error('chunkMax must be provided');
         }
 
         if (opts.chunkMin > opts.chunkMax) {
-          throw new Error('chunkMin must be <= chunkMax');
+            throw new Error('chunkMin must be <= chunkMax');
         }
 
         var chunkBuf = fileBuffer.slice(start, stop);

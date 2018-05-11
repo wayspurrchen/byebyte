@@ -108,7 +108,7 @@ function checkGeneralLength(opts, len) {
 }
 
 module.exports = {
-   checkGeneralLength: checkGeneralLength,
-	  getRandomInt: getRandomInt,
-	  determineModificationRange: determineModificationRange
+   	checkGeneralLength: checkGeneralLength,
+	getRandomInt: getRandomInt,
+	determineModificationRange: determineModificationRange
 };

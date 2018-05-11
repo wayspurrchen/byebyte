@@ -1,7 +1,7 @@
 var util = require('../util');
 var realRandom = util.getRandomInt;
 
-module.exports = function predictible() {
+module.exports = function predictable() {
   var base = 100000;
   var div = 11.03;
 

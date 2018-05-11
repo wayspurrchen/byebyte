@@ -3,13 +3,13 @@ var path = require('path');
 
 var test = require('tape');
 
-var predictible = require('./predictible');
+var predictable = require('./predictable');
 var throwCheck = require('./throw-check');
 
 var byebyte = require('../index');
 
 test('[destroy] basic opts', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
     var expected = fs.readFileSync(path.join(__dirname, 'fixtures', 'destroy-basic-opts.jpg'));
 
@@ -21,7 +21,7 @@ test('[destroy] basic opts', function(assert) {
 });
 
 test('[destroy] has stop but missing start', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -32,7 +32,7 @@ test('[destroy] has stop but missing start', function(assert) {
 });
 
 test('[destroy] has start but missing stop', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -43,7 +43,7 @@ test('[destroy] has start but missing stop', function(assert) {
 });
 
 test('[destroy] has max but missing min', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -54,7 +54,7 @@ test('[destroy] has max but missing min', function(assert) {
 });
 
 test('[destroy] has min but missing max', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -65,7 +65,7 @@ test('[destroy] has min but missing max', function(assert) {
 });
 
 test('[destroy] min/max and start/stop are used', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -76,7 +76,7 @@ test('[destroy] min/max and start/stop are used', function(assert) {
 });
 
 test('[destroy] max is greater than 1', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -87,7 +87,7 @@ test('[destroy] max is greater than 1', function(assert) {
 });
 
 test('[destroy] min is smaller than zero', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -98,7 +98,7 @@ test('[destroy] min is smaller than zero', function(assert) {
 });
 
 test('[destroy] min is bigger than max', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -109,7 +109,7 @@ test('[destroy] min is bigger than max', function(assert) {
 });
 
 test('[destroy] stop is greater than the buffer size', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -120,7 +120,7 @@ test('[destroy] stop is greater than the buffer size', function(assert) {
 });
 
 test('[destroy] start is smaller than zero', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
@@ -131,7 +131,7 @@ test('[destroy] start is smaller than zero', function(assert) {
 });
 
 test('[destroy] start is bigger than stop', function(assert) {
-    var getRandomInt = predictible();
+    var getRandomInt = predictable();
     var fileBuffer = fs.readFileSync(path.join(__dirname, './logo.jpg'));
   
     throwCheck(assert, function() {
